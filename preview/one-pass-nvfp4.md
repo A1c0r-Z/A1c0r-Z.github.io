@@ -20,3 +20,14 @@ On B200, NVFP4 matrix multiplies run on the tensor-core instruction [`tcgen05.mm
 </div>
 <figcaption><span class="fig-num">Figure 1</span>Each pair of blocks along K adds <em>a</em>·<em>b</em> × (its 16-element dot product) to the FP32 accumulator.</figcaption>
 </figure>
+
+A UE4M3 value lies between $$2^{-9}$$ and 448, about 17.8 binades. A block's scale should be about $$\max\lvert x_b\rvert/6$$, where $$x_b$$ are its 16 input values, and for a real tensor that can be far outside this range: gradients are often much smaller, and activations with outliers can be larger. NVFP4 therefore pairs the block scales with a second, FP32 factor, which multiplies them before they are rounded to UE4M3 and slides them into range.
+
+<figure class="fig">
+<div class="fig-scroll">
+{% include figs/nvfp4-ranges.svg %}
+</div>
+<figcaption><span class="fig-num">Figure 2</span>A block's raw scale can fall anywhere in a range of about 261 binades; UE4M3 covers 17.8 of them. The tensor scale chooses which.</figcaption>
+</figure>
+
+This factor is handled by software, not by the tensor core. It only has to be constant along K, so it factors out of the sum in Figure 1 and the GEMM epilogue applies it to the output. The standard choice is one per tensor, the case this post is about; per-row variants also exist.

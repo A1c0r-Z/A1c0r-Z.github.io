@@ -149,14 +149,14 @@ figure.fig figcaption {
   color: var(--muted); margin-top: 0.9rem;
 }
 figure.fig figcaption .fig-num {
-  font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.07em; text-transform: uppercase; color: var(--fg);
+  font-family: var(--serif); font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg);
   margin-right: 0.55em;
 }
 figure.fig figcaption em { color: var(--fig-scale-line); }
-.fig text { font-family: var(--sans); fill: var(--fig-ink); }
-.fig .t-small { font-size: 14px; }
-.fig .t-label { font-size: 15px; font-weight: 500; }
+.fig text { font-family: var(--serif); fill: var(--fig-ink); }
+.fig .t-small { font-size: 15px; }
+.fig .t-label { font-size: 16px; font-weight: 600; }
 .fig .t-faint { fill: var(--muted); }
 .fig .t-scale { fill: var(--fig-scale-line); font-weight: 600; }
 .fig .t-tensor { fill: var(--fig-tensor-line); font-weight: 600; }
@@ -185,6 +185,24 @@ figure.fig figcaption em { color: var(--fig-scale-line); }
 .fig .box { fill: var(--fig-panel); stroke: currentColor; stroke-width: 1; stroke-opacity: 0.35; }
 .fig .box.acc { stroke-opacity: 0.7; }
 .fig .hl { fill: none; stroke: currentColor; stroke-width: 1; stroke-opacity: 0.4; stroke-dasharray: 3 3; }
+
+.fig .win { fill: var(--fig-panel); stroke: currentColor; stroke-width: 1; stroke-opacity: 0.35; stroke-dasharray: 4 3; }
+.fig .sdot { fill: var(--fig-scale); stroke: var(--fig-scale-line); stroke-width: 1; }
+.fig .t-sup { font-size: 10px; }
+
+.fig .sdot.raw { fill: var(--bg); }
+.fig .t-mi { font-family: var(--serif); font-style: italic; font-size: 15px; }
+.fig .t-sub { font-size: 10px; }
+figure.fig table { margin: 0; }
+figure.fig td.zero { color: var(--muted); }
+
+.fig .guide { stroke: currentColor; stroke-width: 1; stroke-opacity: 0.3; stroke-dasharray: 3 3; }
+.fig .bar.bf { fill: var(--fig-panel); stroke: currentColor; stroke-opacity: 0.3; }
+.fig .bar.e4 { fill: var(--fig-panel); stroke: currentColor; stroke-width: 1.2; stroke-opacity: 0.75; }
+.fig .bar.raw { fill: var(--bg); stroke: var(--fig-scale-line); stroke-width: 1.2; }
+.fig .bar.st { fill: var(--fig-scale); stroke: var(--fig-scale-line); stroke-width: 1.2; }
+
+.fig .ghost { fill: none; stroke: var(--fig-scale-line); stroke-width: 1.1; stroke-opacity: 0.55; stroke-dasharray: 3 3; }
 
 @media (max-width: 560px) {
   body { font-size: 1.05rem; }

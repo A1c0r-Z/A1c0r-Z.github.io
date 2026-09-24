@@ -1,0 +1,22 @@
+<svg class="fig fig-line" viewBox="0 0 560 178" role="img" aria-label="On a log2 axis, the raw block scale max |x_b| / 6 of a bf16 tensor can lie anywhere in a range of about 261 binades. UE4M3 covers only 17.8 binades. The tensor scale chooses where this short window sits within the long range.">
+<defs><marker id="sl-l" viewBox="0 0 8 8" refX="1" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M8,0 L0,4 L8,8 z" fill="currentColor"/></marker><marker id="sl-r" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker></defs>
+<text class="t-small" x="38.1" y="24">max|<tspan class="t-mi">x</tspan><tspan class="t-sub" dy="4">b</tspan><tspan dy="-4">|/6 for bf16 inputs: about 261 binades</tspan></text>
+<rect class="bar bf" x="38.1" y="34" width="479.8" height="14" rx="7"/>
+<rect class="ghost" x="142.3" y="84" width="32.7" height="14" rx="7"/>
+<rect class="ghost" x="381.3" y="84" width="32.7" height="14" rx="7"/>
+<rect class="bar st" x="270.8" y="84" width="32.7" height="14" rx="7"/>
+<text class="t-small t-scale" x="287.2" y="76" text-anchor="middle">UE4M3: 17.8 binades</text>
+<line class="ln" x1="144.0" y1="116" x2="412.4" y2="116" marker-start="url(#sl-l)" marker-end="url(#sl-r)"/>
+<text class="t-small" x="287.4" y="134" text-anchor="middle">the tensor scale slides this window</text>
+<line class="axis" x1="30" y1="150" x2="530" y2="150"/>
+<line class="tick" x1="52.1" y1="146" x2="52.1" y2="154"/>
+<text class="t-small" x="52.1" y="174" text-anchor="middle">2<tspan class="t-sup" dy="-6">−128</tspan></text>
+<line class="tick" x1="169.7" y1="146" x2="169.7" y2="154"/>
+<text class="t-small" x="169.7" y="174" text-anchor="middle">2<tspan class="t-sup" dy="-6">−64</tspan></text>
+<line class="tick" x1="287.4" y1="146" x2="287.4" y2="154"/>
+<text class="t-small" x="287.4" y="174" text-anchor="middle">1</text>
+<line class="tick" x1="405.0" y1="146" x2="405.0" y2="154"/>
+<text class="t-small" x="405.0" y="174" text-anchor="middle">2<tspan class="t-sup" dy="-6">64</tspan></text>
+<line class="tick" x1="522.6" y1="146" x2="522.6" y2="154"/>
+<text class="t-small" x="522.6" y="174" text-anchor="middle">2<tspan class="t-sup" dy="-6">128</tspan></text>
+</svg>
