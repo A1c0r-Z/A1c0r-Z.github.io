@@ -1,0 +1,45 @@
+<svg class="fig" viewBox="0 0 560 238" role="img" aria-label="The positive half of the E2M1 grid: 0, 0.5, 1, 1.5, 2, 3, 4, 6. Eight example values of a block, divided by the block scale, are rounded to the nearest grid point.">
+<defs><marker id="e2m1-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrowhead" d="M0,0 L8,4 L0,8 z"/></marker></defs>
+<text class="t-label" x="40" y="24">one block, divided by its scale</text>
+<text class="t-small t-faint" x="520" y="36" text-anchor="middle">block max</text>
+<line class="snap" x1="56.0" y1="62" x2="40" y2="121" marker-end="url(#e2m1-arrow)"/>
+<line class="snap" x1="96.0" y1="62" x2="80.0" y2="121" marker-end="url(#e2m1-arrow)"/>
+<line class="snap" x1="136.0" y1="62" x2="120" y2="121" marker-end="url(#e2m1-arrow)"/>
+<line class="snap" x1="184.0" y1="62" x2="200" y2="121" marker-end="url(#e2m1-arrow)"/>
+<line class="snap" x1="232.0" y1="62" x2="200" y2="121" marker-end="url(#e2m1-arrow)"/>
+<line class="snap" x1="328.0" y1="62" x2="360" y2="121" marker-end="url(#e2m1-arrow)"/>
+<line class="snap" x1="432.0" y1="62" x2="360" y2="121" marker-end="url(#e2m1-arrow)"/>
+<line class="snap" x1="520.0" y1="62" x2="520" y2="121" marker-end="url(#e2m1-arrow)"/>
+<circle class="dot" cx="56.0" cy="56" r="5.5"/>
+<circle class="dot" cx="96.0" cy="56" r="5.5"/>
+<circle class="dot" cx="136.0" cy="56" r="5.5"/>
+<circle class="dot" cx="184.0" cy="56" r="5.5"/>
+<circle class="dot" cx="232.0" cy="56" r="5.5"/>
+<circle class="dot" cx="328.0" cy="56" r="5.5"/>
+<circle class="dot" cx="432.0" cy="56" r="5.5"/>
+<circle class="dot" cx="520.0" cy="56" r="5.5"/>
+<line class="axis" x1="28" y1="130" x2="540" y2="130"/>
+<circle class="grid-pt" cx="40" cy="130" r="4.5"/>
+<text class="t-small" x="40" y="156" text-anchor="middle">0</text>
+<circle class="grid-pt" cx="80.0" cy="130" r="4.5"/>
+<text class="t-small" x="80.0" y="156" text-anchor="middle">0.5</text>
+<circle class="grid-pt" cx="120" cy="130" r="4.5"/>
+<text class="t-small" x="120" y="156" text-anchor="middle">1</text>
+<circle class="grid-pt" cx="160.0" cy="130" r="4.5"/>
+<text class="t-small" x="160.0" y="156" text-anchor="middle">1.5</text>
+<circle class="grid-pt" cx="200" cy="130" r="4.5"/>
+<text class="t-small" x="200" y="156" text-anchor="middle">2</text>
+<circle class="grid-pt" cx="280" cy="130" r="4.5"/>
+<text class="t-small" x="280" y="156" text-anchor="middle">3</text>
+<circle class="grid-pt" cx="360" cy="130" r="4.5"/>
+<text class="t-small" x="360" y="156" text-anchor="middle">4</text>
+<circle class="grid-pt" cx="520" cy="130" r="4.5"/>
+<text class="t-small" x="520" y="156" text-anchor="middle">6</text>
+<path class="bracket" d="M42,172 V178 H198 V172"/>
+<text class="t-small t-faint" x="120" y="197" text-anchor="middle">step 0.5</text>
+<path class="bracket" d="M202,172 V178 H358 V172"/>
+<text class="t-small t-faint" x="280" y="197" text-anchor="middle">step 1</text>
+<path class="bracket" d="M362,172 V178 H518 V172"/>
+<text class="t-small t-faint" x="440" y="197" text-anchor="middle">step 2</text>
+<text class="t-small t-faint" x="40" y="228">E2M1 grid, positive half (negative values mirror it)</text>
+</svg>

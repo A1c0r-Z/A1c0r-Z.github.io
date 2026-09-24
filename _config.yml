@@ -1,0 +1,19 @@
+title: Ce Zhao
+description: >-
+  Notes on GPU kernels, LLM systems and low-precision numerics.
+url: https://a1c0r-z.github.io
+author:
+  name: Ce Zhao
+github_username: A1c0r-Z
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+markdown: kramdown
+kramdown:
+  input: GFM
+  math_engine: mathjax
+  syntax_highlighter: rouge
+exclude:
+  - README.md
+  - drafts/

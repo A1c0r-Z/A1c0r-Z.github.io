@@ -1,0 +1,25 @@
+<svg class="fig" viewBox="0 0 560 262" role="img" aria-label="One row of x along the reduction dimension K, split into blocks of 16 four-bit E2M1 codes, each block with one 8-bit E4M3 scale. One FP32 tensor scale covers the whole tensor.">
+<defs><pattern id="nvfp4-cells" x="0" y="40" width="9" height="28" patternUnits="userSpaceOnUse"><line class="code-line" x1="0" y1="0" x2="0" y2="28"/></pattern></defs>
+<text class="t-label" x="30" y="20">one row of x, along the reduction dimension K →</text>
+<rect class="panel" x="30" y="32" width="156" height="84" rx="8"/>
+<rect class="code" x="36" y="40" width="144" height="28" rx="2"/>
+<rect x="36" y="40" width="144" height="28" fill="url(#nvfp4-cells)"/>
+<rect class="scale" x="78" y="78" width="60" height="28" rx="5"/>
+<text class="t-small t-scale" x="108" y="97" text-anchor="middle">E4M3</text>
+<rect class="panel" x="192" y="32" width="156" height="84" rx="8"/>
+<rect class="code" x="198" y="40" width="144" height="28" rx="2"/>
+<rect x="198" y="40" width="144" height="28" fill="url(#nvfp4-cells)"/>
+<rect class="scale" x="240" y="78" width="60" height="28" rx="5"/>
+<text class="t-small t-scale" x="270" y="97" text-anchor="middle">E4M3</text>
+<rect class="panel" x="354" y="32" width="156" height="84" rx="8"/>
+<rect class="code" x="360" y="40" width="144" height="28" rx="2"/>
+<rect x="360" y="40" width="144" height="28" fill="url(#nvfp4-cells)"/>
+<rect class="scale" x="402" y="78" width="60" height="28" rx="5"/>
+<text class="t-small t-scale" x="432" y="97" text-anchor="middle">E4M3</text>
+<text class="t-label t-faint" x="530" y="80" text-anchor="middle">…</text>
+<text class="t-small" x="30" y="142">each block: 16 E2M1 codes (4 bit) + one E4M3 scale (8 bit) = 4.5 bits per value</text>
+<text class="t-small t-scale" x="30" y="166">block scales change along K → applied inside the MMA, by the tensor core</text>
+<rect class="tensor" x="30" y="184" width="500" height="34" rx="6"/>
+<text class="t-label" x="280" y="206" text-anchor="middle">FP32 tensor scale: one number for the whole tensor</text>
+<text class="t-small t-tensor" x="30" y="244">constant along K → factors out of the dot product, applied after the GEMM</text>
+</svg>
