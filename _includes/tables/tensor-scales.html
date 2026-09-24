@@ -1,0 +1,14 @@
+<figure class="tbl-fig">
+<div class="fig-scroll">
+<table class="tbl">
+<thead><tr><th>Variant</th><th>Scale comes from</th><th>Whole tensor first?</th><th>Used in</th></tr></thead>
+<tbody>
+<tr><td>Static<span class="sub">per tensor</span></td><td>calibration data, offline</td><td class="no">no</td><td>NVFP4 inference checkpoints from <a href="https://github.com/NVIDIA/Model-Optimizer/blob/0.47.0/modelopt/torch/quantization/qtensor/nvfp4_tensor.py#L211-L228">ModelOpt</a> (<code>input_scale</code>), served by vLLM and TensorRT-LLM</td></tr>
+<tr class="hl"><td>Dynamic<span class="tag">this post</span><span class="sub">per tensor</span></td><td>the tensor's own amax</td><td class="yes">yes</td><td>NVFP4 training in <a href="https://nvidia.github.io/TransformerEngine/features/low_precision_training/nvfp4/nvfp4.html">Transformer Engine</a> (the default); kernel #196</td></tr>
+<tr><td>Delayed<span class="sub">per tensor</span></td><td>amax of earlier steps</td><td class="no">no</td><td>FP8 only (Transformer Engine's <a href="https://github.com/NVIDIA/TransformerEngine/blob/v2.19/transformer_engine/common/recipe/__init__.py#L173-L284">DelayedScaling</a>); not available for NVFP4</td></tr>
+<tr><td>Dynamic<span class="sub">per row</span></td><td>each row's amax</td><td class="no">that row only</td><td>Opt-in: Transformer Engine's <a href="https://github.com/NVIDIA/TransformerEngine/pull/2931">row-scaled activations</a>; per-token MoE in <a href="https://github.com/vllm-project/vllm/pull/48538">vLLM</a> and <a href="https://github.com/sgl-project/sglang/pull/26083">SGLang</a></td></tr>
+</tbody>
+</table>
+</div>
+<figcaption><span class="fig-num">Table 1</span>Common choices for the second-level scale. Only the dynamic per-tensor one has to see the whole tensor before any value can be quantized.</figcaption>
+</figure>

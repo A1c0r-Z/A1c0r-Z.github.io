@@ -204,6 +204,37 @@ figure.fig td.zero { color: var(--muted); }
 
 .fig .ghost { fill: none; stroke: var(--fig-scale-line); stroke-width: 1.1; stroke-opacity: 0.55; stroke-dasharray: 3 3; }
 
+/* data tables (booktabs style) */
+figure.tbl-fig { margin: 2rem 0 2.2rem; }
+figure.tbl-fig .fig-scroll { overflow-x: auto; }
+table.tbl {
+  width: 100%; border-collapse: collapse; margin: 0;
+  font-family: var(--serif); font-size: 0.93rem; line-height: 1.45;
+  border-top: 1.5px solid var(--fg); border-bottom: 1.5px solid var(--fg);
+}
+table.tbl th {
+  font-family: var(--serif); font-weight: 600; font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+  text-align: left; vertical-align: bottom;
+  padding: 0.65rem 0.7rem 0.5rem; border-bottom: 1px solid var(--fg);
+}
+table.tbl td { padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.tbl tr:last-child td { border-bottom: 0; }
+table.tbl td:first-child { font-weight: 600; white-space: nowrap; }
+table.tbl tr.hl td { background: #fbf1e4; }
+table.tbl .sub { display: block; font-weight: 400; font-size: 0.82rem; color: var(--muted); }
+table.tbl td:nth-child(3) { white-space: nowrap; }
+table.tbl .yes { color: var(--fig-scale-line); font-weight: 600; }
+table.tbl .no { color: var(--muted); }
+table.tbl .tag {
+  display: inline-block; margin-left: 0.4em; padding: 0 0.4em; border-radius: 3px;
+  font-family: var(--serif); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--fig-scale-line); border: 1px solid var(--fig-scale-line);
+  vertical-align: 0.1em;
+}
+figure.tbl-fig figcaption { font-family: var(--serif); font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin-top: 0.9rem; }
+figure.tbl-fig figcaption .fig-num { font-family: var(--serif); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg); margin-right: 0.55em; }
+
 @media (max-width: 560px) {
   body { font-size: 1.05rem; }
   h1 { font-size: 1.65rem; }
@@ -211,4 +242,5 @@ figure.fig td.zero { color: var(--muted); }
   .intro { padding-top: 2.25rem; }
   .post { padding-top: 2rem; }
   figure.fig svg { min-width: 470px; }
+  table.tbl { min-width: 520px; }
 }
