@@ -1,0 +1,171 @@
+<svg class="fig fig-line" viewBox="0 0 560 250" role="img" aria-label="x and W are split along K into blocks of 16 FP4 values, each block with its own scale (a for x, b for W). For one block pair, the tensor core takes the 16-element dot product, multiplies it by a times b, and adds it to the FP32 accumulator for D[m,n]; this repeats for every block along K.">
+<defs><marker id="mma3-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6.5" markerHeight="6.5" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker></defs>
+<line class="ln-faint" x1="70" y1="12" x2="510" y2="12" marker-end="url(#mma3-arrow)"/>
+<text class="t-math t-faint" x="520" y="17">K</text>
+<text class="t-math" x="52" y="70" text-anchor="end">x</text>
+<text class="t-math" x="52" y="104" text-anchor="end">W</text>
+<g class="fade">
+<rect class="chip" x="108.0" y="24" width="24" height="20" rx="4"/>
+<text class="t-math t-scale" x="120.0" y="39" text-anchor="middle">a</text>
+<rect class="blk" x="70" y="52" width="100" height="24" rx="3"/>
+<line class="cell" x1="76.25" y1="57" x2="76.25" y2="71"/>
+<line class="cell" x1="82.50" y1="57" x2="82.50" y2="71"/>
+<line class="cell" x1="88.75" y1="57" x2="88.75" y2="71"/>
+<line class="cell" x1="95.00" y1="57" x2="95.00" y2="71"/>
+<line class="cell" x1="101.25" y1="57" x2="101.25" y2="71"/>
+<line class="cell" x1="107.50" y1="57" x2="107.50" y2="71"/>
+<line class="cell" x1="113.75" y1="57" x2="113.75" y2="71"/>
+<line class="cell" x1="120.00" y1="57" x2="120.00" y2="71"/>
+<line class="cell" x1="126.25" y1="57" x2="126.25" y2="71"/>
+<line class="cell" x1="132.50" y1="57" x2="132.50" y2="71"/>
+<line class="cell" x1="138.75" y1="57" x2="138.75" y2="71"/>
+<line class="cell" x1="145.00" y1="57" x2="145.00" y2="71"/>
+<line class="cell" x1="151.25" y1="57" x2="151.25" y2="71"/>
+<line class="cell" x1="157.50" y1="57" x2="157.50" y2="71"/>
+<line class="cell" x1="163.75" y1="57" x2="163.75" y2="71"/>
+<rect class="blk" x="70" y="86" width="100" height="24" rx="3"/>
+<line class="cell" x1="76.25" y1="91" x2="76.25" y2="105"/>
+<line class="cell" x1="82.50" y1="91" x2="82.50" y2="105"/>
+<line class="cell" x1="88.75" y1="91" x2="88.75" y2="105"/>
+<line class="cell" x1="95.00" y1="91" x2="95.00" y2="105"/>
+<line class="cell" x1="101.25" y1="91" x2="101.25" y2="105"/>
+<line class="cell" x1="107.50" y1="91" x2="107.50" y2="105"/>
+<line class="cell" x1="113.75" y1="91" x2="113.75" y2="105"/>
+<line class="cell" x1="120.00" y1="91" x2="120.00" y2="105"/>
+<line class="cell" x1="126.25" y1="91" x2="126.25" y2="105"/>
+<line class="cell" x1="132.50" y1="91" x2="132.50" y2="105"/>
+<line class="cell" x1="138.75" y1="91" x2="138.75" y2="105"/>
+<line class="cell" x1="145.00" y1="91" x2="145.00" y2="105"/>
+<line class="cell" x1="151.25" y1="91" x2="151.25" y2="105"/>
+<line class="cell" x1="157.50" y1="91" x2="157.50" y2="105"/>
+<line class="cell" x1="163.75" y1="91" x2="163.75" y2="105"/>
+<rect class="chip" x="108.0" y="118" width="24" height="20" rx="4"/>
+<text class="t-math t-scale" x="120.0" y="133" text-anchor="middle">b</text>
+</g>
+<g>
+<rect class="chip" x="224.0" y="24" width="24" height="20" rx="4"/>
+<text class="t-math t-scale" x="236.0" y="39" text-anchor="middle">a</text>
+<rect class="blk" x="186" y="52" width="100" height="24" rx="3"/>
+<line class="cell" x1="192.25" y1="57" x2="192.25" y2="71"/>
+<line class="cell" x1="198.50" y1="57" x2="198.50" y2="71"/>
+<line class="cell" x1="204.75" y1="57" x2="204.75" y2="71"/>
+<line class="cell" x1="211.00" y1="57" x2="211.00" y2="71"/>
+<line class="cell" x1="217.25" y1="57" x2="217.25" y2="71"/>
+<line class="cell" x1="223.50" y1="57" x2="223.50" y2="71"/>
+<line class="cell" x1="229.75" y1="57" x2="229.75" y2="71"/>
+<line class="cell" x1="236.00" y1="57" x2="236.00" y2="71"/>
+<line class="cell" x1="242.25" y1="57" x2="242.25" y2="71"/>
+<line class="cell" x1="248.50" y1="57" x2="248.50" y2="71"/>
+<line class="cell" x1="254.75" y1="57" x2="254.75" y2="71"/>
+<line class="cell" x1="261.00" y1="57" x2="261.00" y2="71"/>
+<line class="cell" x1="267.25" y1="57" x2="267.25" y2="71"/>
+<line class="cell" x1="273.50" y1="57" x2="273.50" y2="71"/>
+<line class="cell" x1="279.75" y1="57" x2="279.75" y2="71"/>
+<rect class="blk" x="186" y="86" width="100" height="24" rx="3"/>
+<line class="cell" x1="192.25" y1="91" x2="192.25" y2="105"/>
+<line class="cell" x1="198.50" y1="91" x2="198.50" y2="105"/>
+<line class="cell" x1="204.75" y1="91" x2="204.75" y2="105"/>
+<line class="cell" x1="211.00" y1="91" x2="211.00" y2="105"/>
+<line class="cell" x1="217.25" y1="91" x2="217.25" y2="105"/>
+<line class="cell" x1="223.50" y1="91" x2="223.50" y2="105"/>
+<line class="cell" x1="229.75" y1="91" x2="229.75" y2="105"/>
+<line class="cell" x1="236.00" y1="91" x2="236.00" y2="105"/>
+<line class="cell" x1="242.25" y1="91" x2="242.25" y2="105"/>
+<line class="cell" x1="248.50" y1="91" x2="248.50" y2="105"/>
+<line class="cell" x1="254.75" y1="91" x2="254.75" y2="105"/>
+<line class="cell" x1="261.00" y1="91" x2="261.00" y2="105"/>
+<line class="cell" x1="267.25" y1="91" x2="267.25" y2="105"/>
+<line class="cell" x1="273.50" y1="91" x2="273.50" y2="105"/>
+<line class="cell" x1="279.75" y1="91" x2="279.75" y2="105"/>
+<rect class="chip" x="224.0" y="118" width="24" height="20" rx="4"/>
+<text class="t-math t-scale" x="236.0" y="133" text-anchor="middle">b</text>
+</g>
+<g class="fade">
+<rect class="chip" x="340.0" y="24" width="24" height="20" rx="4"/>
+<text class="t-math t-scale" x="352.0" y="39" text-anchor="middle">a</text>
+<rect class="blk" x="302" y="52" width="100" height="24" rx="3"/>
+<line class="cell" x1="308.25" y1="57" x2="308.25" y2="71"/>
+<line class="cell" x1="314.50" y1="57" x2="314.50" y2="71"/>
+<line class="cell" x1="320.75" y1="57" x2="320.75" y2="71"/>
+<line class="cell" x1="327.00" y1="57" x2="327.00" y2="71"/>
+<line class="cell" x1="333.25" y1="57" x2="333.25" y2="71"/>
+<line class="cell" x1="339.50" y1="57" x2="339.50" y2="71"/>
+<line class="cell" x1="345.75" y1="57" x2="345.75" y2="71"/>
+<line class="cell" x1="352.00" y1="57" x2="352.00" y2="71"/>
+<line class="cell" x1="358.25" y1="57" x2="358.25" y2="71"/>
+<line class="cell" x1="364.50" y1="57" x2="364.50" y2="71"/>
+<line class="cell" x1="370.75" y1="57" x2="370.75" y2="71"/>
+<line class="cell" x1="377.00" y1="57" x2="377.00" y2="71"/>
+<line class="cell" x1="383.25" y1="57" x2="383.25" y2="71"/>
+<line class="cell" x1="389.50" y1="57" x2="389.50" y2="71"/>
+<line class="cell" x1="395.75" y1="57" x2="395.75" y2="71"/>
+<rect class="blk" x="302" y="86" width="100" height="24" rx="3"/>
+<line class="cell" x1="308.25" y1="91" x2="308.25" y2="105"/>
+<line class="cell" x1="314.50" y1="91" x2="314.50" y2="105"/>
+<line class="cell" x1="320.75" y1="91" x2="320.75" y2="105"/>
+<line class="cell" x1="327.00" y1="91" x2="327.00" y2="105"/>
+<line class="cell" x1="333.25" y1="91" x2="333.25" y2="105"/>
+<line class="cell" x1="339.50" y1="91" x2="339.50" y2="105"/>
+<line class="cell" x1="345.75" y1="91" x2="345.75" y2="105"/>
+<line class="cell" x1="352.00" y1="91" x2="352.00" y2="105"/>
+<line class="cell" x1="358.25" y1="91" x2="358.25" y2="105"/>
+<line class="cell" x1="364.50" y1="91" x2="364.50" y2="105"/>
+<line class="cell" x1="370.75" y1="91" x2="370.75" y2="105"/>
+<line class="cell" x1="377.00" y1="91" x2="377.00" y2="105"/>
+<line class="cell" x1="383.25" y1="91" x2="383.25" y2="105"/>
+<line class="cell" x1="389.50" y1="91" x2="389.50" y2="105"/>
+<line class="cell" x1="395.75" y1="91" x2="395.75" y2="105"/>
+<rect class="chip" x="340.0" y="118" width="24" height="20" rx="4"/>
+<text class="t-math t-scale" x="352.0" y="133" text-anchor="middle">b</text>
+</g>
+<g class="fade">
+<rect class="chip" x="456.0" y="24" width="24" height="20" rx="4"/>
+<text class="t-math t-scale" x="468.0" y="39" text-anchor="middle">a</text>
+<rect class="blk" x="418" y="52" width="100" height="24" rx="3"/>
+<line class="cell" x1="424.25" y1="57" x2="424.25" y2="71"/>
+<line class="cell" x1="430.50" y1="57" x2="430.50" y2="71"/>
+<line class="cell" x1="436.75" y1="57" x2="436.75" y2="71"/>
+<line class="cell" x1="443.00" y1="57" x2="443.00" y2="71"/>
+<line class="cell" x1="449.25" y1="57" x2="449.25" y2="71"/>
+<line class="cell" x1="455.50" y1="57" x2="455.50" y2="71"/>
+<line class="cell" x1="461.75" y1="57" x2="461.75" y2="71"/>
+<line class="cell" x1="468.00" y1="57" x2="468.00" y2="71"/>
+<line class="cell" x1="474.25" y1="57" x2="474.25" y2="71"/>
+<line class="cell" x1="480.50" y1="57" x2="480.50" y2="71"/>
+<line class="cell" x1="486.75" y1="57" x2="486.75" y2="71"/>
+<line class="cell" x1="493.00" y1="57" x2="493.00" y2="71"/>
+<line class="cell" x1="499.25" y1="57" x2="499.25" y2="71"/>
+<line class="cell" x1="505.50" y1="57" x2="505.50" y2="71"/>
+<line class="cell" x1="511.75" y1="57" x2="511.75" y2="71"/>
+<rect class="blk" x="418" y="86" width="100" height="24" rx="3"/>
+<line class="cell" x1="424.25" y1="91" x2="424.25" y2="105"/>
+<line class="cell" x1="430.50" y1="91" x2="430.50" y2="105"/>
+<line class="cell" x1="436.75" y1="91" x2="436.75" y2="105"/>
+<line class="cell" x1="443.00" y1="91" x2="443.00" y2="105"/>
+<line class="cell" x1="449.25" y1="91" x2="449.25" y2="105"/>
+<line class="cell" x1="455.50" y1="91" x2="455.50" y2="105"/>
+<line class="cell" x1="461.75" y1="91" x2="461.75" y2="105"/>
+<line class="cell" x1="468.00" y1="91" x2="468.00" y2="105"/>
+<line class="cell" x1="474.25" y1="91" x2="474.25" y2="105"/>
+<line class="cell" x1="480.50" y1="91" x2="480.50" y2="105"/>
+<line class="cell" x1="486.75" y1="91" x2="486.75" y2="105"/>
+<line class="cell" x1="493.00" y1="91" x2="493.00" y2="105"/>
+<line class="cell" x1="499.25" y1="91" x2="499.25" y2="105"/>
+<line class="cell" x1="505.50" y1="91" x2="505.50" y2="105"/>
+<line class="cell" x1="511.75" y1="91" x2="511.75" y2="105"/>
+<rect class="chip" x="456.0" y="118" width="24" height="20" rx="4"/>
+<text class="t-math t-scale" x="468.0" y="133" text-anchor="middle">b</text>
+</g>
+<rect class="hl" x="178" y="19" width="116" height="123" rx="8"/>
+<line class="ln" x1="236.0" y1="142" x2="236.0" y2="168" marker-end="url(#mma3-arrow)"/>
+<rect class="box" x="130" y="170" width="170" height="36" rx="6"/>
+<text class="t-small" x="215" y="193" text-anchor="middle">16-element dot product</text>
+<line class="ln" x1="300" y1="188" x2="330" y2="188" marker-end="url(#mma3-arrow)"/>
+<rect class="box" x="332" y="170" width="76" height="36" rx="6"/>
+<text class="t-small" x="370" y="193" text-anchor="middle">× <tspan class="t-math t-scale">a</tspan> · <tspan class="t-math t-scale">b</tspan></text>
+<line class="ln" x1="408" y1="188" x2="438" y2="188" marker-end="url(#mma3-arrow)"/>
+<rect class="box acc" x="440" y="170" width="100" height="36" rx="6"/>
+<text class="t-small" x="490" y="193" text-anchor="middle">+= D[m, n]</text>
+<text class="t-small t-faint" x="490" y="226" text-anchor="middle">FP32 accumulator</text>
+<text class="t-small t-faint" x="130" y="226">repeated for every block along K</text>
+</svg>

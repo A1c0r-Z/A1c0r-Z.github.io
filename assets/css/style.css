@@ -22,28 +22,6 @@
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #141518;
-    --fg: #e5e4e0;
-    --muted: #9ca1a9;
-    --rule: #2b2d32;
-    --accent: #72bfd8;
-    --accent-soft: #1b2a30;
-    --code-bg: #1c1e22;
-    --banner-bg: #2c2415;
-    --banner-fg: #e9c47e;
-    --fig-ink: #d8d7d2;
-    --fig-faint: #7d828a;
-    --fig-panel: #1d1f23;
-    --fig-code: #1f3447;
-    --fig-code-line: #6f9cc6;
-    --fig-scale: #43311c;
-    --fig-scale-line: #d99a55;
-    --fig-tensor: #22361f;
-    --fig-tensor-line: #7fb872;
-  }
-}
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -167,9 +145,15 @@ figure.fig { margin: 2rem 0 2.2rem; }
 figure.fig .fig-scroll { overflow-x: auto; }
 figure.fig svg { display: block; width: 100%; height: auto; }
 figure.fig figcaption {
-  font-family: var(--sans); font-size: 0.85rem; line-height: 1.55;
-  color: var(--muted); margin-top: 0.8rem;
+  font-family: var(--serif); font-size: 0.95rem; line-height: 1.6;
+  color: var(--muted); margin-top: 0.9rem;
 }
+figure.fig figcaption .fig-num {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--fg);
+  margin-right: 0.55em;
+}
+figure.fig figcaption em { color: var(--fig-scale-line); }
 .fig text { font-family: var(--sans); fill: var(--fig-ink); }
 .fig .t-small { font-size: 14px; }
 .fig .t-label { font-size: 15px; font-weight: 500; }
@@ -188,6 +172,19 @@ figure.fig figcaption {
 .fig .code-line { stroke: var(--fig-code-line); stroke-width: 0.8; opacity: 0.55; }
 .fig .scale { fill: var(--fig-scale); stroke: var(--fig-scale-line); stroke-width: 1.2; }
 .fig .tensor { fill: var(--fig-tensor); stroke: var(--fig-tensor-line); stroke-width: 1.2; }
+
+.fig-line { color: var(--fig-ink); }
+.fig .blk { fill: none; stroke: currentColor; stroke-width: 1.2; opacity: 0.7; }
+.fig .cell { stroke: currentColor; stroke-width: 0.8; opacity: 0.22; }
+.fig .chip { fill: var(--fig-scale); stroke: var(--fig-scale-line); stroke-width: 1; }
+.fig .ln-faint { stroke: currentColor; stroke-width: 1.1; fill: none; opacity: 0.45; }
+
+.fig .t-math { font-family: var(--serif); font-style: italic; font-size: 17px; }
+.fig .fade { opacity: 0.32; }
+.fig .ln { stroke: currentColor; stroke-width: 1.2; fill: none; opacity: 0.75; }
+.fig .box { fill: var(--fig-panel); stroke: currentColor; stroke-width: 1; stroke-opacity: 0.35; }
+.fig .box.acc { stroke-opacity: 0.7; }
+.fig .hl { fill: none; stroke: currentColor; stroke-width: 1; stroke-opacity: 0.4; stroke-dasharray: 3 3; }
 
 @media (max-width: 560px) {
   body { font-size: 1.05rem; }
