@@ -30,7 +30,7 @@
   var LO = -10, HI = 9.3, GX0 = 24, GX1 = 616;
   function GX(l) { return GX0 + (l - LO) * (GX1 - GX0) / (HI - LO); }
   var ZX0 = 44, ZX1 = 596, ZY = 176;
-  function el(tag, attrs, text) { var n = document.createElementNS(NS, tag); for (var k in attrs) n.setAttribute(k, attrs[k]); if (text != null) n.textContent = text; return n; }
+  function el(tag, attrs, text) { var n = document.createElementNS(NS, tag); for (var k in attrs) n.setAttribute(k, attrs[k]); if (tag !== 'text' && !n.hasAttribute('fill')) n.setAttribute('fill', 'none'); if (text != null) n.textContent = text; return n; }
   function sup(base, ex) { return base + '<tspan class="t-sup" dy="-6">' + ex + '</tspan>'; }
   var gG = root.querySelector('.w-global'), gZ = root.querySelector('.w-zoom'), lens = root.querySelector('.w-lens');
   var top448 = Math.log2(448);

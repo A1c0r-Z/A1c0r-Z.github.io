@@ -28,7 +28,7 @@
   var AX = 118, W = 640;
   var st = { c: 0.7, s: 240, brk: 0, ghost: 0, lat: 0, reveal: -1, mov: 0, shift: 0, yU: L2(Y1), yOp: 0, cellOp: 0, tgtOp: 0, act: 0, actU: 0, pulse: 0, sBand: 0, cap: 0, which: 1, tl: '', al: '' };
   function X(u) { return W / 2 + (u - st.c) * st.s; }
-  function el(tag, a, txt) { var n = document.createElementNS(NS, tag); for (var k in a) n.setAttribute(k, a[k]); if (txt != null) n.textContent = txt; return n; }
+  function el(tag, a, txt) { var n = document.createElementNS(NS, tag); for (var k in a) n.setAttribute(k, a[k]); if (tag !== 'text' && !n.hasAttribute('fill')) n.setAttribute('fill', 'none'); if (txt != null) n.textContent = txt; return n; }
   function draw() {
     while (svg.firstChild) svg.removeChild(svg.firstChild);
     var uL = st.c - (W / 2) / st.s, uR = st.c + (W / 2) / st.s;
