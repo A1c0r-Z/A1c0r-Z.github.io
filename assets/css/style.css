@@ -296,6 +296,8 @@ figure.tbl-fig figcaption .fig-num { font-family: var(--serif); font-size: 0.78r
 .anim-svg .a-tl { font-style: italic; fill: var(--fig-scale-line); }
 .anim-svg .a-al { font-style: italic; fill: #b3261e; }
 .anim-svg .a-sup { font-size: 10px; }
+.anim-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; margin-top: 0.6rem; font-size: 0.85rem; color: var(--muted); }
+.anim-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
 .anim-caps { position: relative; min-height: 3.4em; margin-top: 0.7rem; }
 .anim-cap { position: absolute; inset: 0 0 auto 0; margin: 0; font-size: 1rem; line-height: 1.6; color: var(--fg); opacity: 0; transition: opacity 0.4s; }
 .anim-cap.on { opacity: 1; }

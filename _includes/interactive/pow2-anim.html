@@ -1,6 +1,14 @@
 {% raw %}
 <div class="anim" id="p2a">
 <svg class="anim-svg" viewBox="0 0 640 200" role="img" aria-label="Animation: on a log axis the normal UE4M3 values repeat every binade. Multiplying by a power of two shifts the whole set by whole binades onto itself, so rounding moves along; multiplying by 1.1 does not, and neither does a shift into the subnormal values."></svg>
+<div class="anim-legend">
+<span><svg viewBox="0 0 14 14" width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="#a9adb4" stroke-width="1.5"/></svg>UE4M3 values</span>
+<span><svg viewBox="0 0 14 14" width="14" height="14"><line x1="7" y1="1" x2="7" y2="13" stroke="#b56f24" stroke-width="2"/></svg><i>y</i></span>
+<span><svg viewBox="0 0 14 14" width="14" height="14"><circle cx="7" cy="7" r="5.5" fill="#b56f24"/></svg>where <i>y</i> rounds, <i>R</i>(<i>y</i>)</span>
+<span><svg viewBox="0 0 14 14" width="14" height="14"><rect x="1" y="3" width="12" height="8" rx="2" fill="#f5dcbd"/></svg>everything that rounds there</span>
+<span><svg viewBox="0 0 14 14" width="14" height="14"><circle cx="7" cy="7" r="3" fill="#1f6a86"/></svg>the values after scaling</span>
+<span><svg viewBox="0 0 14 14" width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="#b3261e" stroke-width="1.8"/></svg>where the scaled <i>y</i> actually rounds</span>
+</div>
 <div class="anim-caps">
 <p class="anim-cap">On a log scale, every binade of N holds the same 8 values.</p>
 <p class="anim-cap">A value \(y\) rounds to its nearest value, \(R(y)\). The shaded cell is everything that rounds there.</p>
