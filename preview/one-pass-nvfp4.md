@@ -54,5 +54,8 @@ $$
 and multiplying by $$2^k$$ only shifts its range of exponents:
 
 $$
-2^{k} N = \{\, m \cdot 2^{e+k} \,\} = \{\, m \cdot 2^{e} \;:\; m \in \{1, \tfrac{9}{8}, \dots, \tfrac{15}{8}\},\ e = -6+k, \dots, 8+k \,\}
+\begin{aligned}
+2^{k} N &= \{\, m \cdot 2^{e+k} \,\} \\
+&= \{\, m \cdot 2^{e} \;:\; m \in \{1, \tfrac{9}{8}, \dots, \tfrac{15}{8}\},\ e = -6+k, \dots, 8+k \,\}
+\end{aligned}
 $$
