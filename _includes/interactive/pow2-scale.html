@@ -1,0 +1,93 @@
+{% raw %}
+<div class="widget" id="p2w">
+<div class="w-controls">
+<div class="w-seg" role="group" aria-label="tensor scale mode"><button type="button" data-mode="any">any g</button><button type="button" data-mode="pow2" class="on">power of two</button></div>
+<label class="w-slider"><span>tensor scale</span><input type="range" min="-7" max="11" step="0.01" value="3" aria-label="log2 of the tensor scale g"><span class="w-g"></span></label>
+<button type="button" class="w-play" aria-label="sweep the tensor scale">▶ sweep</button>
+</div>
+<svg class="fig fig-line w-svg" viewBox="0 0 640 236" role="img" aria-label="The UE4M3 values on a log axis, with the binade that contains v times g magnified below, showing where v times g falls and where it rounds.">
+<g class="w-global"></g>
+<polygon class="w-lens" points=""/>
+<g class="w-zoom"></g>
+</svg>
+<div class="w-bytes">stored scale <span class="w-sb"></span> = <span class="w-bits"></span>, and <span class="w-eff"></span></div>
+<div class="w-codes"></div>
+<div class="w-status" aria-live="polite"></div>
+</div>
+<script>
+(function () {
+  var root = document.getElementById('p2w'); if (!root) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  function rne(x) { var f = Math.floor(x), d = x - f; if (d > 0.5) return f + 1; if (d < 0.5) return f; return (f % 2 === 0) ? f : f + 1; }
+  function rinf(y) { if (!(y > 0)) return 0; var e = Math.floor(Math.log2(y)), m = y / Math.pow(2, e); if (m < 1) { e--; m *= 2; } if (m >= 2) { e++; m /= 2; } return rne(m * 8) / 8 * Math.pow(2, e); }
+  function ue4m3(y) { if (!(y > 0)) return 0; if (y >= 448) return 448; if (y < Math.pow(2, -6)) return rne(y / Math.pow(2, -9)) * Math.pow(2, -9); return Math.min(rinf(y), 448); }
+  function e2m1(t) { var a = Math.abs(t), q; if (a <= 0.25) q = 0; else if (a < 0.75) q = 0.5; else if (a <= 1.25) q = 1; else if (a < 1.75) q = 1.5; else if (a <= 2.5) q = 2; else if (a < 3.5) q = 3; else if (a <= 5) q = 4; else q = 6; return t < 0 ? -q : q; }
+  var X = [0.93, -0.41, 0.12, 0.77, -0.58, 0.26, -0.95, 0.66, 0.08, -0.33, 0.51, -0.72, 0.19, 0.87, -0.46, 1.23];
+  var amaxB = 0; X.forEach(function (x) { amaxB = Math.max(amaxB, Math.abs(x)); });
+  var v = amaxB / 6, p = rinf(v);
+  var vals = []; for (var m = 1; m <= 7; m++) vals.push(m * Math.pow(2, -9));
+  for (var e = -6; e <= 8; e++) for (var i = 0; i < 8; i++) { var w = (1 + i / 8) * Math.pow(2, e); if (w <= 448) vals.push(w); }
+  var LO = -10, HI = 9.3, GX0 = 24, GX1 = 616;
+  function GX(l) { return GX0 + (l - LO) * (GX1 - GX0) / (HI - LO); }
+  var ZX0 = 44, ZX1 = 596, ZY = 176;
+  function el(tag, attrs, text) { var n = document.createElementNS(NS, tag); for (var k in attrs) n.setAttribute(k, attrs[k]); if (text != null) n.textContent = text; return n; }
+  function sup(base, ex) { return base + '<tspan class="t-sup" dy="-6">' + ex + '</tspan>'; }
+  var gG = root.querySelector('.w-global'), gZ = root.querySelector('.w-zoom'), lens = root.querySelector('.w-lens');
+  var top448 = Math.log2(448);
+  gG.appendChild(el('rect', { x: GX(-9), y: 22, width: GX(-6) - GX(-9), height: 28, class: 'w-band-s' }));
+  for (var b = -6; b <= 8; b++) gG.appendChild(el('rect', { x: GX(b), y: 22, width: GX(Math.min(b + 1, top448)) - GX(b), height: 28, class: (b % 2 === 0) ? 'w-band-n' : 'w-band-n2' }));
+  gG.appendChild(el('text', { x: (GX(-9) + GX(-6)) / 2, y: 16, 'text-anchor': 'middle', class: 't-small t-scale' }, 'S'));
+  gG.appendChild(el('text', { x: (GX(-6) + GX(top448)) / 2, y: 16, 'text-anchor': 'middle', class: 't-small t-faint' }, 'N'));
+  vals.forEach(function (w) { var x = GX(Math.log2(w)); gG.appendChild(el('line', { x1: x, y1: 32, x2: x, y2: 50, class: 'w-tick' })); });
+  gG.appendChild(el('line', { x1: GX0, y1: 50, x2: GX1, y2: 50, class: 'axis' }));
+  [[-9, '2', '−9'], [-6, '2', '−6'], [0, '1', null], [top448, '448', null]].forEach(function (t) {
+    var tx = el('text', { x: GX(t[0]), y: 70, 'text-anchor': 'middle', class: 't-small' }); tx.innerHTML = t[2] ? sup(t[1], t[2]) : t[1]; gG.appendChild(tx);
+  });
+  var hl = el('rect', { y: 20, height: 32, class: 'w-binhl' }); gG.appendChild(hl);
+  var gMark = el('line', { y1: 18, y2: 54, class: 'w-gmark' }); gG.appendChild(gMark);
+  gZ.appendChild(el('line', { x1: ZX0, y1: ZY, x2: ZX1, y2: ZY, class: 'axis' }));
+  var zTicks = el('g', {}); gZ.appendChild(zTicks);
+  var zArrow = el('path', { class: 'ln' }); gZ.appendChild(zArrow);
+  var zRaw = el('circle', { r: 6, cy: ZY, class: 'sdot raw' }); gZ.appendChild(zRaw);
+  var zRnd = el('circle', { r: 6, cy: ZY, class: 'sdot' }); gZ.appendChild(zRnd);
+  var zLab = el('text', { x: (ZX0 + ZX1) / 2, y: 122, 'text-anchor': 'middle', class: 't-small' }); gZ.appendChild(zLab);
+  var zNote = el('text', { x: (ZX0 + ZX1) / 2, y: 226, 'text-anchor': 'middle', class: 't-small t-faint' }); gZ.appendChild(zNote);
+  var cells = root.querySelector('.w-codes'), cellEls = [];
+  X.forEach(function (x) { var c = document.createElement('div'); c.className = 'w-cell'; c.innerHTML = '<span class="xv">' + x.toFixed(2) + '</span><span class="qv"></span>'; cells.appendChild(c); cellEls.push(c); });
+  var slider = root.querySelector('input[type=range]'), segs = root.querySelectorAll('.w-seg button'), play = root.querySelector('.w-play');
+  var mode = 'pow2';
+  function fmt(z) { if (z === 0) return '0'; var a = Math.abs(z); if (a >= 100) return z.toFixed(0); if (a >= 1) return (+z.toFixed(3)).toString(); var s = z.toPrecision(3); return (+s).toString(); }
+  function bits(s) { var E, M; if (s === 0) { E = 0; M = 0; } else if (s < Math.pow(2, -6)) { E = 0; M = Math.round(s / Math.pow(2, -9)); } else { var e = Math.floor(Math.log2(s)); E = e + 7; M = Math.round((s / Math.pow(2, e) - 1) * 8); } var eb = ('0000' + E.toString(2)).slice(-4), mb = ('000' + M.toString(2)).slice(-3); return '<span class="eb">' + eb + '</span><span class="mb">' + mb + '</span>'; }
+  function render() {
+    var lg = +slider.value; if (mode === 'pow2') { lg = Math.round(lg); slider.value = lg; }
+    var g = Math.pow(2, lg), y = v * g, s = ue4m3(y);
+    root.querySelector('.w-g').innerHTML = mode === 'pow2' ? ('g = 2<sup>' + lg + '</sup>') : ('g = ' + fmt(g));
+    var E = Math.floor(Math.log2(y)), lo = Math.pow(2, E);
+    hl.setAttribute('x', GX(E)); hl.setAttribute('width', Math.max(2, GX(E + 1) - GX(E)));
+    var gx = GX(Math.log2(y)); gMark.setAttribute('x1', gx); gMark.setAttribute('x2', gx);
+    lens.setAttribute('points', GX(E) + ',54 ' + GX(E + 1) + ',54 ' + ZX1 + ',136 ' + ZX0 + ',136');
+    while (zTicks.firstChild) zTicks.removeChild(zTicks.firstChild);
+    var inS = y < Math.pow(2, -6), steps = 0;
+    vals.forEach(function (w) { if (w >= lo && w <= 2 * lo) { var zx = ZX0 + (w / lo - 1) * (ZX1 - ZX0); zTicks.appendChild(el('line', { x1: zx, y1: ZY - 9, x2: zx, y2: ZY + 9, class: 'tick' })); if (w < 2 * lo) steps++; if (!inS || true) zTicks.appendChild(el('text', { x: zx, y: ZY + 28, 'text-anchor': 'middle', class: 't-tick' }, fmt(w / lo))); } });
+    var zr = ZX0 + (y / lo - 1) * (ZX1 - ZX0), zs = ZX0 + Math.max(0, Math.min(1, s / lo - 1)) * (ZX1 - ZX0);
+    if (s === 0) zs = ZX0;
+    zRaw.setAttribute('cx', zr); zRnd.setAttribute('cx', zs);
+    zArrow.setAttribute('d', 'M' + zr + ',' + (ZY - 12) + ' Q' + ((zr + zs) / 2) + ',' + (ZY - 36) + ' ' + zs + ',' + (ZY - 12));
+    zLab.innerHTML = 'v·g = ' + fmt(y / lo) + ' × ' + sup('2', E < 0 ? '−' + (-E) : E) + '<tspan dy="6">  rounds to  ' + (s === 0 ? '0' : fmt(s / lo) + ' × </tspan>' + sup('2', E < 0 ? '−' + (-E) : E));
+    zNote.textContent = inS ? 'this binade is in S: ' + steps + ' step' + (steps === 1 ? '' : 's') + ' of 2⁻⁹, not the 8 steps of N' : 'every binade of N has the same 8 steps';
+    root.querySelector('.w-sb').textContent = 's_b = ' + fmt(s);
+    root.querySelector('.w-bits').innerHTML = bits(s);
+    var eff = s / g; root.querySelector('.w-eff').innerHTML = 's_b / g = ' + fmt(eff) + (Math.abs(eff - p) < 1e-12 * p ? ' (the block’s own rounding)' : ' <b>(not the block’s own rounding, ' + fmt(p) + ')</b>');
+    var diff = 0;
+    X.forEach(function (x, i) { var q = s > 0 ? e2m1(x * g / s) : 0, q0 = e2m1(x / p); cellEls[i].querySelector('.qv').textContent = (q > 0 ? '+' : q < 0 ? '−' : '') + Math.abs(q); var d = q !== q0; if (d) diff++; cellEls[i].classList.toggle('diff', d); });
+    root.querySelector('.w-status').textContent = diff === 0 ? 'All 16 four-bit values match what the block gives on its own.' : diff + ' of 16 four-bit values differ from what the block gives on its own.';
+  }
+  segs.forEach(function (bt) { bt.addEventListener('click', function () { mode = bt.getAttribute('data-mode'); segs.forEach(function (o) { o.classList.toggle('on', o === bt); }); slider.step = mode === 'pow2' ? '1' : '0.01'; render(); }); });
+  slider.addEventListener('input', render);
+  var raf = null, t0 = 0, from = 0;
+  function tick(t) { if (!t0) { t0 = t; from = +slider.value; } var span = 18, dur = mode === 'pow2' ? 9000 : 12000, u = ((t - t0) / dur + (from + 7) / span) % 1; slider.value = -7 + u * span; render(); raf = requestAnimationFrame(tick); }
+  play.addEventListener('click', function () { if (raf) { cancelAnimationFrame(raf); raf = null; play.textContent = '▶ sweep'; } else { t0 = 0; raf = requestAnimationFrame(tick); play.textContent = '❚❚ pause'; } });
+  slider.step = '1'; render();
+})();
+</script>
+{% endraw %}
