@@ -45,4 +45,4 @@ q    = E2M1( x * g / s_b )         # 4-bit values
 
 ## A power-of-two tensor scale
 
-Now restrict g to a power of two: $$g = 2^k$$ with $$k = \lfloor \log_2(2688/\mathrm{amax}) \rfloor$$. Multiplying by $$2^k$$ changes only the exponent of $$\max\lvert x_b\rvert/6 \cdot g$$, not its mantissa, and rounding to UE4M3 looks only at the mantissa. So the stored block scale is exactly $$2^k$$ times the one for $$g = 1$$, the ratio $$g/s_b$$ does not change, and neither does any 4-bit value. Only the scale bytes move: changing k by one adds 8 to each of them.
+Any dynamic second-level scale is a reduction over some scope: the whole tensor, as in the first line above, or a row. With an exact scale, every 4-bit value depends on the result of that reduction, so the whole scope must be read before anything can be written. With a power-of-two scale, each block's values depend only on the block itself; the reduction only sets a shared exponent, which can be applied afterwards. Quantizing a block becomes independent of its scope.
