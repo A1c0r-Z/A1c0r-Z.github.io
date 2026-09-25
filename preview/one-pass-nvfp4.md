@@ -42,3 +42,7 @@ g    = 6 * 448 / amax              # tensor scale
 s_b  = UE4M3( max|x_b| / 6 * g )   # stored block scale
 q    = E2M1( x * g / s_b )         # 4-bit values
 ```
+
+## A power-of-two tensor scale
+
+Now restrict g to a power of two: $$g = 2^k$$ with $$k = \lfloor \log_2(2688/\mathrm{amax}) \rfloor$$. Multiplying by $$2^k$$ changes only the exponent of $$\max\lvert x_b\rvert/6 \cdot g$$, not its mantissa, and rounding to UE4M3 looks only at the mantissa. So the stored block scale is exactly $$2^k$$ times the one for $$g = 1$$, the ratio $$g/s_b$$ does not change, and neither does any 4-bit value. Only the scale bytes move: changing k by one adds 8 to each of them.
