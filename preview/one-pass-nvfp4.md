@@ -45,21 +45,31 @@ q    = E2M1( x * g / s_b )         # 4-bit values
 
 ## A power-of-two tensor scale
 
-Write a positive number as $$y = (1+f)\,2^{E}$$ with $$0 \le f < 1$$, and let R keep three mantissa bits:
+UE4M3 has three kinds of values:
+
+$$
+\begin{aligned}
+\mathrm{UE4M3} &= \{0\} \cup S \cup N, \\
+S &= \{\, m \cdot 2^{-9} \;:\; m = 1, \dots, 7 \,\}, \\
+N &= \{\, (1 + \tfrac{i}{8})\, 2^{e} \;:\; i = 0, \dots, 7,\ e = -6, \dots, 8 \,\} \cap [0, 448].
+\end{aligned}
+$$
+
+N keeps three mantissa bits; S has a fixed step of $$2^{-9}$$. Write $$y = (1+f)\,2^{E}$$ with $$0 \le f < 1$$, and let R keep three mantissa bits:
 
 $$
 R\big((1+f)\,2^{E}\big) = \big(1 + \lfloor f \rceil_{3}\big)\,2^{E},
 $$
 
-where $$\lfloor f \rceil_{3}$$ rounds f to the nearest multiple of 1/8, ties to even. On the normal range $$[2^{-6}, 448]$$, R is exactly rounding to UE4M3. Now take a block with $$v_b = \max\lvert x_b\rvert/6 = (1+f_b)\,2^{E_b}$$ and a power-of-two tensor scale $$g = 2^k$$:
+where $$\lfloor f \rceil_{3}$$ rounds f to a multiple of 1/8, ties to even. On $$[2^{-6}, 448]$$, $$\mathrm{UE4M3}(y) = R(y)$$. For a block with $$v_b = \max\lvert x_b\rvert/6 = (1+f_b)\,2^{E_b}$$ and $$g = 2^k$$, $$v_b\,g \in [2^{-6}, 448]$$:
 
 $$
 \begin{aligned}
-s_b &= R(v_b\,g) = \big(1+\lfloor f_b \rceil_3\big)\,2^{E_b+k} = g\,R(v_b), \\
+s_b &= \mathrm{UE4M3}(v_b\,g) = R(v_b\,g) = \big(1+\lfloor f_b \rceil_3\big)\,2^{E_b+k} = g\,R(v_b), \\
 q &= \mathrm{E2M1}(x\,g/s_b) = \mathrm{E2M1}\big(x/R(v_b)\big).
 \end{aligned}
 $$
 
-Nothing on the right depends on k: the 4-bit values and the dequantized values $$\hat{x} = q\,R(v_b)$$ are fixed by the block alone, and k only enters the exponent of the stored byte. For a general $$g = (1+f_g)\,2^{E_g}$$, the mantissa of $$v_b\,g$$ is $$(1+f_b)(1+f_g)$$, whose rounding depends on $$f_g$$.
+So the 4-bit values depend on the block alone, and k only sets the exponent of the stored byte. A general g would change the mantissa to $$(1+f_b)(1+f_g)$$.
 
-This needs $$v_b\,g \in [2^{-6}, 448]$$. Choosing $$k = \lfloor \log_2(448/v_{\max}) \rfloor$$, with $$v_{\max} = \mathrm{amax}/6$$, gives $$v_b\,g \le 448$$ for every block, so the top edge is never crossed. Below $$2^{-6}$$, UE4M3 is subnormal and rounds to a fixed step of $$2^{-9}$$ instead of three mantissa bits, so R no longer applies and $$s_b$$ depends on k. Since $$g > 224/v_{\max}$$, only blocks with $$\max\lvert x_b\rvert < \mathrm{amax}\cdot 2^{-6}/224 \approx \mathrm{amax}/14{,}000$$ can land there.
+Taking $$k = \lfloor \log_2(2688/\mathrm{amax}) \rfloor$$ keeps $$v_b\,g \le 448$$. Only blocks with $$\max\lvert x_b\rvert < \mathrm{amax}/14{,}000$$ can fall below $$2^{-6}$$ into S, where this fails.
