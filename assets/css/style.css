@@ -235,6 +235,15 @@ table.tbl .tag {
 figure.tbl-fig figcaption { font-family: var(--serif); font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin-top: 0.9rem; }
 figure.tbl-fig figcaption .fig-num { font-family: var(--serif); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg); margin-right: 0.55em; }
 
+.fig .t-head { font-weight: 600; }
+
+.fig .ln-acc { stroke: var(--fig-scale-line); stroke-width: 1.8; fill: none; }
+.fig .acc-fill { fill: var(--fig-scale-line); }
+.fig .box.glob { fill: var(--fig-scale); stroke: var(--fig-scale-line); stroke-opacity: 1; }
+
+.fig .barrier { stroke: var(--fig-scale-line); stroke-width: 1.6; stroke-dasharray: 4 3; }
+.fig .fade-box { opacity: 0.55; }
+
 @media (max-width: 560px) {
   body { font-size: 1.05rem; }
   h1 { font-size: 1.65rem; }

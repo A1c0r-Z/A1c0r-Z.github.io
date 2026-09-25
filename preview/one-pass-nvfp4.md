@@ -73,3 +73,10 @@ $$
 So the 4-bit values depend on the block alone, and k only sets the exponent of the stored byte. A general g would change the mantissa to $$(1+f_b)(1+f_g)$$.
 
 Taking $$k = \lfloor \log_2(2688/\mathrm{amax}) \rfloor$$ keeps $$v_b\,g \le 448$$. Only blocks with $$\max\lvert x_b\rvert < \mathrm{amax}/14{,}000$$ can fall below $$2^{-6}$$ into S, where this fails.
+
+<figure class="fig">
+<div class="fig-scroll">
+{% include figs/nvfp4-kernels.svg %}
+</div>
+<figcaption><span class="fig-num">Figure 3</span>With an exact tensor scale, quantize depends on amax (orange), so x is read twice. With a power-of-two scale, quantize and the amax reduction run side by side in one pass over x; only a small finalize, which adds k to the scale exponents and redoes the few blocks that fall into S, waits for amax.</figcaption>
+</figure>

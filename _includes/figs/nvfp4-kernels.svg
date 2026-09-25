@@ -1,0 +1,38 @@
+<svg class="fig fig-line" viewBox="0 0 560 276" role="img" aria-label="Dependencies of dynamic quantization before the GEMM. With an exact tensor scale, quantize depends on amax, so the two run one after the other. With a power-of-two tensor scale, quantize and the amax reduction run side by side in the same pass over x, and only a small finalize step, which adds k to the scale exponents, waits for amax before the GEMM.">
+<defs><marker id="kf-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor" opacity="0.75"/></marker><marker id="kf-acc" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L8,4 L0,8 z" class="acc-fill"/></marker></defs>
+<text class="t-small t-head" x="16" y="18">Exact tensor scale: amax, then quantize</text>
+<rect class="box" x="16" y="30" width="46" height="46" rx="6"/>
+<text class="t-small t-head" x="39.0" y="58.0" text-anchor="middle">x</text>
+<rect class="box glob" x="90" y="30" width="120" height="46" rx="6"/>
+<text class="t-small t-head" x="150.0" y="49" text-anchor="middle">amax</text>
+<text class="t-small t-faint" x="150.0" y="67" text-anchor="middle">reduction</text>
+<rect class="box" x="250" y="30" width="150" height="46" rx="6"/>
+<text class="t-small t-head" x="325.0" y="49" text-anchor="middle">quantize</text>
+<text class="t-small t-faint" x="325.0" y="67" text-anchor="middle">values and scales</text>
+<rect class="box fade-box" x="440" y="30" width="104" height="46" rx="6"/>
+<text class="t-small t-head" x="492.0" y="58.0" text-anchor="middle">GEMM</text>
+<path class="ln" d="M62,53.0 L88,53.0" marker-end="url(#kf-arrow)"/>
+<path class="ln-acc" d="M210,53.0 L248,53.0" marker-end="url(#kf-acc)"/>
+<path class="ln" d="M400,53.0 L438,53.0" marker-end="url(#kf-arrow)"/>
+<text class="t-small t-head" x="16" y="120">Power-of-two tensor scale: side by side, then finalize</text>
+<rect class="box" x="90" y="136" width="150" height="46" rx="6"/>
+<text class="t-small t-head" x="165.0" y="155" text-anchor="middle">quantize</text>
+<text class="t-small t-faint" x="165.0" y="173" text-anchor="middle">values, mantissas</text>
+<rect class="box glob" x="90" y="194" width="150" height="46" rx="6"/>
+<text class="t-small t-head" x="165.0" y="213" text-anchor="middle">amax</text>
+<text class="t-small t-faint" x="165.0" y="231" text-anchor="middle">reduction</text>
+<rect class="box" x="16" y="165.0" width="46" height="46" rx="6"/>
+<text class="t-small t-head" x="39.0" y="193.0" text-anchor="middle">x</text>
+<rect class="hl" x="80" y="128" width="170" height="120" rx="10"/>
+<text class="t-small t-faint" x="165" y="266" text-anchor="middle">one pass over x</text>
+<rect class="box" x="290" y="165.0" width="110" height="46" rx="6"/>
+<text class="t-small t-head" x="345.0" y="184.0" text-anchor="middle">finalize</text>
+<text class="t-small t-faint" x="345.0" y="202.0" text-anchor="middle">+k on scales</text>
+<rect class="box fade-box" x="440" y="165.0" width="104" height="46" rx="6"/>
+<text class="t-small t-head" x="492.0" y="193.0" text-anchor="middle">GEMM</text>
+<path class="ln" d="M62,182.0 C76,182.0 74,159.0 88,159.0" marker-end="url(#kf-arrow)"/>
+<path class="ln" d="M62,194.0 C76,194.0 74,217.0 88,217.0" marker-end="url(#kf-arrow)"/>
+<path class="ln" d="M240,159.0 C266,159.0 264,180.0 288,180.0" marker-end="url(#kf-arrow)"/>
+<path class="ln-acc" d="M240,217.0 C266,217.0 264,196.0 288,196.0" marker-end="url(#kf-acc)"/>
+<path class="ln" d="M400,188.0 L438,188.0" marker-end="url(#kf-arrow)"/>
+</svg>
