@@ -82,3 +82,59 @@ Taking $$k = \lfloor \log_2(2688/\mathrm{amax}) \rfloor$$ keeps $$v_b\,g \le 448
 </div>
 <figcaption><span class="fig-num">Figure 3</span>With an exact tensor scale, quantize depends on amax (orange), so x is read twice. With a power-of-two scale, quantize and the amax reduction run side by side in one pass over x; only a small finalize, which adds k to the scale exponents and redoes the few blocks that fall into S, waits for amax.</figcaption>
 </figure>
+
+## Results
+
+**Exactness.** The one-pass quantizer is compared byte for byte with the two-pass quantizer that uses the same $$g = 2^k$$.
+
+<figure class="tbl-fig">
+<div class="fig-scroll">
+<table class="tbl">
+<thead><tr><th>Input</th><th>Implementation</th><th>Blocks in S</th><th>Mismatched bytes</th></tr></thead>
+<tbody>
+<tr><td>Qwen2.5-0.5B, every Linear input<span class="sub">4 × 1024 WikiText-2 tokens</span></td><td>PyTorch emulation</td><td>0.05%</td><td>0</td></tr>
+<tr><td>Qwen2.5-1.5B, every Linear input<span class="sub">4 × 1024 WikiText-2 tokens</span></td><td>PyTorch emulation</td><td>1.8%</td><td>0</td></tr>
+<tr><td>Gaussian, 2048 × 8192</td><td>B200 kernel</td><td>0%</td><td>0</td></tr>
+<tr><td>Planted channel outliers, 2048 × 8192</td><td>B200 kernel</td><td>0.004%</td><td>0</td></tr>
+<tr><td>Lognormal row scales, 2048 × 8192</td><td>B200 kernel</td><td>12.4%</td><td>0</td></tr>
+</tbody>
+</table>
+</div>
+<figcaption><span class="fig-num">Table 2</span>A negative control that perturbs the provisional scale of 1% of blocks by one mantissa step is caught in every trial (1352/1352 and 1576/1576). In Qwen2.5-1.5B the blocks in S concentrate in the <code>down_proj</code> inputs of layers 1 and 2 (63% and 42%).</figcaption>
+</figure>
+
+**Accuracy.** Every Linear input is fake-quantized (activations only), and the models are evaluated on WikiText-2, 240 windows of 1024 tokens.
+
+<figure class="tbl-fig">
+<div class="fig-scroll">
+<table class="tbl">
+<thead><tr><th></th><th>Qwen2.5-0.5B</th><th>Qwen2.5-1.5B</th></tr></thead>
+<tbody>
+<tr><td>Perplexity, bf16</td><td>14.80</td><td>10.47</td></tr>
+<tr><td>Perplexity, standard NVFP4</td><td>16.83</td><td>11.53</td></tr>
+<tr><td>Perplexity, power-of-two</td><td>16.85</td><td>11.52</td></tr>
+<tr><td>KL to bf16, power-of-two / standard</td><td>1.011</td><td>1.008</td></tr>
+<tr><td>ΔNLL, power-of-two − standard</td><td>+0.0017 ± 0.0015</td><td>−0.0007 ± 0.0013</td></tr>
+</tbody>
+</table>
+</div>
+<figcaption><span class="fig-num">Table 3</span>Both KL increases are significant (paired 95% bootstrap CI); neither ΔNLL is. ± is one standard error.</figcaption>
+</figure>
+
+**Speed.** A standalone quantizer on B200, M × 8192 bf16 input; L2 flushed between runs, runs interleaved, CUPTI timing. The two-pass baseline is an amax kernel and a quantize kernel chained with programmatic dependent launch.
+
+<figure class="tbl-fig">
+<div class="fig-scroll">
+<table class="tbl">
+<thead><tr><th>M</th><th>Two-pass <span class="unit">(µs)</span></th><th>One-pass <span class="unit">(µs)</span></th><th>Change</th></tr></thead>
+<tbody>
+<tr><td>1024</td><td>11.74</td><td>10.20</td><td>−13%</td></tr>
+<tr><td>2048</td><td>18.41</td><td>14.14</td><td>−23%</td></tr>
+<tr><td>4096</td><td>31.12</td><td>23.48</td><td>−25%</td></tr>
+<tr><td>8192</td><td>55.45</td><td>40.95</td><td>−26%</td></tr>
+<tr><td>16384</td><td>103.22</td><td>79.78</td><td>−23%</td></tr>
+</tbody>
+</table>
+</div>
+<figcaption><span class="fig-num">Table 4</span>Gaussian input, so no block takes the fix-up path: this is the best case. A bandwidth model that counts the provisional scales staged between the two kernels bounds the gain at about 38%.</figcaption>
+</figure>
