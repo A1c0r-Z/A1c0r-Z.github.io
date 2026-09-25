@@ -59,3 +59,9 @@ $$
 &= \{\, m \cdot 2^{e} \;:\; m \in \{1, \tfrac{9}{8}, \dots, \tfrac{15}{8}\},\ e = -6+k, \dots, 8+k \,\}
 \end{aligned}
 $$
+
+so, with $$R$$ denoting rounding to UE4M3,
+
+$$
+R(2^k y) = 2^k R(y) \qquad \text{for } y,\ 2^k y \in [2^{-6}, 448].
+$$
