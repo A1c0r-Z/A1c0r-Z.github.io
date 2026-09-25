@@ -45,6 +45,14 @@ q    = E2M1( x * g / s_b )         # 4-bit values
 
 ## A power-of-two tensor scale
 
-NVFP4 needs one more factor than its hardware format: the tensor scale g, and, when it is dynamic, one more reduction to compute it. The coupling comes from the third line of the recipe, $$s_b = \mathrm{UE4M3}(\max\lvert x_b\rvert/6 \cdot g)$$. Rounding to UE4M3 ties every block scale, and through it every 4-bit value, to the exact value of g, so nothing can be written until the reduction is done.
+The normal UE4M3 values form the set
 
-If g is a power of two, the coupling disappears. Take $$g = 2^k$$, for example with $$k = \lfloor \log_2(2688/\mathrm{amax}) \rfloor$$, the largest power of two not above the standard g. Multiplying by $$2^k$$ changes only the exponent of $$\max\lvert x_b\rvert/6 \cdot g$$, and rounding to UE4M3 looks only at the mantissa. So each block's scale mantissa and 4-bit values are fixed by the block alone, and the reduction only decides k, a shared exponent that can be added afterwards: 8 per step, in byte terms. This holds whatever the reduction runs over, the whole tensor or a row.
+$$
+N = \{\, m \cdot 2^{e} \;:\; m \in \{1, \tfrac{9}{8}, \tfrac{10}{8}, \dots, \tfrac{15}{8}\},\ e = -6, \dots, 8 \,\}
+$$
+
+and multiplying by $$2^k$$ only shifts its range of exponents:
+
+$$
+2^{k} N = \{\, m \cdot 2^{e+k} \,\} = \{\, m \cdot 2^{e} \;:\; m \in \{1, \tfrac{9}{8}, \dots, \tfrac{15}{8}\},\ e = -6+k, \dots, 8+k \,\}
+$$
