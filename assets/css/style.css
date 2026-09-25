@@ -282,10 +282,12 @@ figure.tbl-fig figcaption .fig-num { font-family: var(--serif); font-size: 0.78r
 .anim-svg .a-ghost { fill: none; stroke: #a9adb4; stroke-width: 1.4; }
 .anim-svg .a-mov { fill: var(--accent); }
 .anim-svg .a-pulse { fill: none; stroke: var(--accent); stroke-width: 1.2; }
-.anim-svg .a-cell { fill: var(--fig-scale); }
+.anim-svg .a-cell { fill: var(--fig-scale); fill-opacity: 0.55; }
+.anim-svg .a-cellline { fill: none; stroke: var(--fig-scale-line); stroke-width: 1.3; }
+.anim-svg .a-ytri { fill: var(--fig-scale-line); }
 .anim-svg .a-tgt { fill: var(--fig-scale-line); }
 .anim-svg .a-act { fill: none; stroke: #b3261e; stroke-width: 2; }
-.anim-svg .a-yline { stroke: var(--fig-scale-line); stroke-width: 2; }
+.anim-svg .a-yline { stroke: var(--fig-scale-line); stroke-width: 1.8; }
 .anim-svg .a-alt { fill: #f1eee7; }
 .anim-svg .a-brk { fill: none; stroke: var(--fig-ink); stroke-width: 1.2; }
 .anim-svg .a-sband { fill: var(--fig-scale); opacity: 0.35; }
@@ -297,7 +299,7 @@ figure.tbl-fig figcaption .fig-num { font-family: var(--serif); font-size: 0.78r
 .anim-svg .a-al { font-style: italic; fill: #b3261e; }
 .anim-svg .a-sup { font-size: 10px; }
 .anim-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; margin-top: 0.6rem; font-size: 0.85rem; color: var(--muted); }
-.anim-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+.anim-legend > span { display: inline-flex; align-items: center; gap: 0.35rem; }
 .anim-caps { position: relative; min-height: 3.4em; margin-top: 0.7rem; }
 .anim-cap { position: absolute; inset: 0 0 auto 0; margin: 0; font-size: 1rem; line-height: 1.6; color: var(--fg); opacity: 0; transition: opacity 0.4s; }
 .anim-cap.on { opacity: 1; }
