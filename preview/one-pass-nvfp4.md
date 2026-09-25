@@ -45,4 +45,6 @@ q    = E2M1( x * g / s_b )         # 4-bit values
 
 ## A power-of-two tensor scale
 
-Any dynamic second-level scale is a reduction over some scope: the whole tensor, as in the first line above, or a row. With an exact scale, every 4-bit value depends on the result of that reduction, so the whole scope must be read before anything can be written. With a power-of-two scale, each block's values depend only on the block itself; the reduction only sets a shared exponent, which can be applied afterwards. Quantizing a block becomes independent of its scope.
+NVFP4 needs one more factor than its hardware format: the tensor scale g, and, when it is dynamic, one more reduction to compute it. The coupling comes from the third line of the recipe, $$s_b = \mathrm{UE4M3}(\max\lvert x_b\rvert/6 \cdot g)$$. Rounding to UE4M3 ties every block scale, and through it every 4-bit value, to the exact value of g, so nothing can be written until the reduction is done.
+
+If g is a power of two, the coupling disappears. Take $$g = 2^k$$, for example with $$k = \lfloor \log_2(2688/\mathrm{amax}) \rfloor$$, the largest power of two not above the standard g. Multiplying by $$2^k$$ changes only the exponent of $$\max\lvert x_b\rvert/6 \cdot g$$, and rounding to UE4M3 looks only at the mantissa. So each block's scale mantissa and 4-bit values are fixed by the block alone, and the reduction only decides k, a shared exponent that can be added afterwards: 8 per step, in byte terms. This holds whatever the reduction runs over, the whole tensor or a row.
