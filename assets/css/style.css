@@ -274,6 +274,37 @@ figure.tbl-fig figcaption .fig-num { font-family: var(--serif); font-size: 0.78r
 .w-cell.diff { background: var(--fig-scale); border-color: var(--fig-scale-line); }
 .w-status { font-size: 0.92rem; color: var(--muted); margin-top: 0.55rem; }
 
+/* animation */
+.anim { margin: 2rem 0 2.2rem; }
+.anim-svg { display: block; width: 100%; height: auto; background: #fdfcf9; border: 1px solid var(--rule); border-radius: 12px; color: var(--fig-ink); }
+.anim-svg .a-axis { stroke: var(--fig-faint); stroke-width: 1.4; }
+.anim-svg .a-btick { stroke: var(--fig-faint); stroke-width: 1.4; }
+.anim-svg .a-ghost { fill: none; stroke: #a9adb4; stroke-width: 1.4; }
+.anim-svg .a-mov { fill: var(--accent); }
+.anim-svg .a-pulse { fill: none; stroke: var(--accent); stroke-width: 1.2; }
+.anim-svg .a-cell { fill: var(--fig-scale); }
+.anim-svg .a-tgt { fill: var(--fig-scale-line); }
+.anim-svg .a-act { fill: none; stroke: #b3261e; stroke-width: 2; }
+.anim-svg .a-yline { stroke: var(--fig-scale-line); stroke-width: 2; }
+.anim-svg .a-alt { fill: #f1eee7; }
+.anim-svg .a-brk { fill: none; stroke: var(--fig-ink); stroke-width: 1.2; }
+.anim-svg .a-sband { fill: var(--fig-scale); opacity: 0.35; }
+.anim-svg .a-lab { font-family: var(--serif); font-size: 15px; fill: var(--fig-ink); }
+.anim-svg .a-y { font-style: italic; fill: var(--fig-scale-line); font-size: 17px; }
+.anim-svg .a-s { fill: var(--fig-scale-line); font-weight: 600; }
+.anim-svg .a-n { font-style: italic; font-size: 17px; }
+.anim-svg .a-tl { font-style: italic; fill: var(--fig-scale-line); }
+.anim-svg .a-al { font-style: italic; fill: #b3261e; }
+.anim-svg .a-sup { font-size: 10px; }
+.anim-caps { position: relative; min-height: 3.4em; margin-top: 0.7rem; }
+.anim-cap { position: absolute; inset: 0 0 auto 0; margin: 0; font-size: 1rem; line-height: 1.6; color: var(--fg); opacity: 0; transition: opacity 0.4s; }
+.anim-cap.on { opacity: 1; }
+.anim-ctrl { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; }
+.anim-ctrl button.anim-play, .anim-ctrl button.anim-replay { font-family: var(--serif); font-size: 0.85rem; width: 2rem; height: 1.8rem; border: 1px solid var(--rule); border-radius: 6px; background: transparent; color: var(--muted); cursor: pointer; }
+.anim-dots { display: inline-flex; gap: 0.35rem; margin-left: 0.3rem; }
+.anim-dot { width: 0.55rem; height: 0.55rem; padding: 0; border-radius: 50%; border: 0; background: var(--rule); cursor: pointer; }
+.anim-dot.on { background: var(--fig-scale-line); }
+
 @media (max-width: 560px) {
   body { font-size: 1.05rem; }
   h1 { font-size: 1.65rem; }

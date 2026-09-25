@@ -1,0 +1,99 @@
+{% raw %}
+<div class="anim" id="p2a">
+<svg class="anim-svg" viewBox="0 0 640 200" role="img" aria-label="Animation: on a log axis the normal UE4M3 values repeat every binade. Multiplying by a power of two shifts the whole set by whole binades onto itself, so rounding moves along; multiplying by 1.1 does not, and neither does a shift into the subnormal values."></svg>
+<div class="anim-caps">
+<p class="anim-cap">On a log scale, every binade of N holds the same 8 values.</p>
+<p class="anim-cap">A value \(y\) rounds to its nearest value, \(R(y)\). The shaded cell is everything that rounds there.</p>
+<p class="anim-cap">Multiplying by 2 shifts everything by one binade. N lands on itself, so the nearest value moves along: \(R(2y) = 2R(y)\).</p>
+<p class="anim-cap">The same holds for every power of two: \(R(2^k y) = 2^k R(y)\).</p>
+<p class="anim-cap">A general factor shifts by a fraction of a binade. N does not land on itself: \(R(1.1\,y) = 1.75\), not \(1.1\,R(y) \approx 1.79\).</p>
+<p class="anim-cap">At the bottom, the subnormal values S have fewer points per binade, so the pattern breaks.</p>
+<p class="anim-cap">Halving a value moves it into S, where it rounds differently: \(R(y/2) \ne R(y)/2\).</p>
+</div>
+<div class="anim-ctrl"><button type="button" class="anim-play">❚❚</button><button type="button" class="anim-replay">↺</button><span class="anim-dots"></span></div>
+</div>
+<script>
+(function () {
+  var root = document.getElementById('p2a'); if (!root) return;
+  var svg = root.querySelector('svg'), NS = 'http://www.w3.org/2000/svg';
+  var L2 = Math.log2;
+  var N = [], Sv = [];
+  for (var e = -6; e <= 8; e++) for (var i = 0; i < 8; i++) { var w = (1 + i / 8) * Math.pow(2, e); if (w <= 448) N.push(w); }
+  for (var m = 1; m <= 7; m++) Sv.push(m * Math.pow(2, -9));
+  var ALL = Sv.concat(N);
+  function nearest(y, set) { var best = set[0], d = Infinity; for (var j = 0; j < set.length; j++) { var dd = Math.abs(set[j] - y); if (dd < d - 1e-15) { d = dd; best = set[j]; } } return best; }
+  function cell(r, set) { var j = set.indexOf(r); var lo = j > 0 ? (set[j - 1] + r) / 2 : r / 2, hi = j < set.length - 1 ? (set[j + 1] + r) / 2 : r * 1.03; return [lo, hi]; }
+  var Y1 = 1.64, R1 = nearest(Y1, ALL), C1 = cell(R1, ALL);
+  var Y2 = 1.64 * Math.pow(2, -6), R2 = nearest(Y2, ALL), C2 = cell(R2, ALL);
+  var AX = 118, W = 640;
+  var st = { c: 0.7, s: 240, brk: 0, ghost: 0, lat: 0, reveal: -1, mov: 0, shift: 0, yU: L2(Y1), yOp: 0, cellOp: 0, tgtOp: 0, act: 0, actU: 0, pulse: 0, sBand: 0, cap: 0, which: 1, tl: '', al: '' };
+  function X(u) { return W / 2 + (u - st.c) * st.s; }
+  function el(tag, a, txt) { var n = document.createElementNS(NS, tag); for (var k in a) n.setAttribute(k, a[k]); if (txt != null) n.textContent = txt; return n; }
+  function draw() {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var uL = st.c - (W / 2) / st.s, uR = st.c + (W / 2) / st.s;
+    if (st.sBand > 0) {
+      var x0 = Math.max(0, X(-9)), x1 = Math.min(W, X(-6));
+      if (x1 > x0) { svg.appendChild(el('rect', { x: x0, y: AX - 30, width: x1 - x0, height: 60, class: 'a-sband', opacity: st.sBand })); svg.appendChild(el('text', { x: x0 + 12, y: AX - 38, class: 'a-lab a-s', opacity: st.sBand }, 'S (subnormal)')); }
+    }
+    for (var bb = Math.max(-6, Math.floor(uL)); bb <= Math.min(8, Math.ceil(uR)); bb++) { if (bb % 2 !== 0) continue; var bx0 = X(bb), bx1 = X(Math.min(bb + 1, L2(448))); svg.appendChild(el('rect', { x: bx0, y: AX - 30, width: bx1 - bx0, height: 60, class: 'a-alt', opacity: st.lat })); }
+    if (st.brk > 0) { var k0 = X(0), k1 = X(1); svg.appendChild(el('path', { d: 'M' + (k0 + 3) + ',' + (AX - 36) + ' v-6 H' + (k1 - 3) + ' v6', class: 'a-brk', opacity: st.brk })); svg.appendChild(el('text', { x: (k0 + k1) / 2, y: AX - 50, 'text-anchor': 'middle', class: 'a-lab', opacity: st.brk }, 'one binade, 8 values')); }
+    svg.appendChild(el('line', { x1: 0, y1: AX, x2: W, y2: AX, class: 'a-axis', opacity: Math.max(st.lat, 0.001) }));
+    for (var b = Math.ceil(uL); b <= Math.floor(uR); b++) {
+      var t = el('text', { x: X(b), y: AX + 44, 'text-anchor': 'middle', class: 'a-lab', opacity: st.lat });
+      if (b === 0) t.textContent = '1'; else t.innerHTML = '2<tspan class="a-sup" dy="-7">' + (b < 0 ? '−' + (-b) : b) + '</tspan>';
+      svg.appendChild(t); svg.appendChild(el('line', { x1: X(b), y1: AX + 20, x2: X(b), y2: AX + 27, class: 'a-btick', opacity: st.lat }));
+    }
+    ALL.forEach(function (v) { var u = L2(v); if (u < uL - 1 || u > uR + 1) return; var vis = st.reveal < -50 ? 1 : Math.max(0, Math.min(1, (st.reveal - u) * 1.5)); if (vis <= 0) return; svg.appendChild(el('circle', { cx: X(u), cy: AX, r: 5.2, class: 'a-ghost', opacity: vis * st.lat })); });
+    var cy = st.which === 1 ? C1 : C2, ry = st.which === 1 ? R1 : R2;
+    if (st.cellOp > 0) { var cx0 = X(L2(cy[0]) + st.shift), cx1 = X(L2(cy[1]) + st.shift); svg.appendChild(el('rect', { x: cx0, y: AX - 17, width: cx1 - cx0, height: 34, rx: 5, class: 'a-cell', opacity: st.cellOp })); }
+    if (st.mov > 0) {
+      ALL.forEach(function (v) { if (v < Math.pow(2, -6) && st.which === 2) return; var u = L2(v) + st.shift; if (u < uL - 1 || u > uR + 1) return; if (L2(v) < -6 && st.which === 1) return; svg.appendChild(el('circle', { cx: X(u), cy: AX, r: 2.9, class: 'a-mov', opacity: st.mov }));
+        if (st.pulse > 0 && st.pulse < 1) svg.appendChild(el('circle', { cx: X(u), cy: AX, r: 5 + 9 * st.pulse, class: 'a-pulse', opacity: (1 - st.pulse) * st.mov })); });
+    }
+    if (st.tgtOp > 0) svg.appendChild(el('circle', { cx: X(L2(ry) + st.shift), cy: AX, r: 6.5, class: 'a-tgt', opacity: st.tgtOp }));
+    if (st.act > 0) { svg.appendChild(el('circle', { cx: X(st.actU), cy: AX, r: 8.5, class: 'a-act', opacity: st.act })); }
+    if (st.act > 0 && st.s > 500) { var tx0 = X(L2(ry) + st.shift), ax0 = X(st.actU), left = tx0 < ax0; svg.appendChild(el('text', { x: tx0, y: AX + 30, 'text-anchor': left ? 'end' : 'start', class: 'a-lab a-tl', opacity: st.act, dx: left ? 6 : -6 }, st.tl)); svg.appendChild(el('text', { x: ax0, y: AX + 30, 'text-anchor': left ? 'start' : 'end', class: 'a-lab a-al', opacity: st.act, dx: left ? -6 : 6 }, st.al)); }
+    if (st.yOp > 0) { var yx = X(st.yU + st.shift); svg.appendChild(el('line', { x1: yx, y1: AX - 34, x2: yx, y2: AX - 10, class: 'a-yline', opacity: st.yOp })); svg.appendChild(el('text', { x: yx, y: AX - 40, 'text-anchor': 'middle', class: 'a-lab a-y', opacity: st.yOp }, 'y')); }
+    if (st.lat > 0 && st.sBand <= 0) svg.appendChild(el('text', { x: 20, y: 24, class: 'a-lab a-n', opacity: st.lat }, 'N'));
+  }
+  function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  var steps = [], capStart = [];
+  function step(dur, to, set) { steps.push({ dur: dur, to: to || {}, set: set || {} }); }
+  function scene(cap) { capStart.push(steps.length); step(1, {}, { cap: cap }); }
+  scene(0); step(400, { lat: 1 }); step(1800, { reveal: 3.5 }); step(600, { brk: 1 }); step(1800, {}); step(500, { brk: 0 });
+  scene(1); step(600, { yOp: 1 }); step(700, { cellOp: 1 }); step(600, { tgtOp: 1 }); step(1400, {});
+  scene(2); step(600, { mov: 1 }); step(1500, { shift: 1 }); step(700, { pulse: 1 }); step(1600, {});
+  scene(3); step(1200, { shift: 2 }, { pulse: 0 }); step(500, { pulse: 1 }); step(1200, { shift: 3 }, { pulse: 0 }); step(500, { pulse: 1 }); step(1400, {});
+  step(700, { mov: 0, cellOp: 0, tgtOp: 0, yOp: 0 }, { pulse: 0 }); step(1, { shift: 0 }, {});
+  scene(4); step(500, { yOp: 1, cellOp: 1, tgtOp: 1, mov: 1 }); step(1500, { shift: L2(1.1) }); step(500, { act: 1 }, { actU: L2(nearest(Y1 * 1.1, ALL)), tl: '1.1 R(y)', al: 'R(1.1 y)' }); step(1300, { c: L2(1.79), s: 1100 }); step(2600, {}); step(1000, { c: 0.7, s: 240 });
+  step(700, { mov: 0, cellOp: 0, tgtOp: 0, yOp: 0, act: 0 }); step(1, { shift: 0 }, {});
+  scene(5); step(2200, { c: -6.6, s: 150, sBand: 1 }); step(1600, {});
+  scene(6); step(1, {}, { which: 2, yU: L2(Y2) }); step(600, { yOp: 1, cellOp: 1, tgtOp: 1, mov: 1 }); step(1600, { shift: -1 }); step(500, { act: 1 }, { actU: L2(nearest(Y2 / 2, ALL)), tl: 'R(y) / 2', al: 'R(y / 2)' }); step(1300, { c: L2(Y2 / 2) + 0.03, s: 900 }); step(2800, {}); step(1000, { c: -6.6, s: 150 });
+  step(800, { mov: 0, cellOp: 0, tgtOp: 0, yOp: 0, act: 0, sBand: 0 }); step(1, { shift: 0 }, { which: 1, yU: L2(Y1) }); step(1800, { c: 0.7, s: 240 }); step(600, {});
+  var init = JSON.parse(JSON.stringify(st)); init.reveal = -2;
+  var caps = root.querySelectorAll('.anim-cap'), dots = root.querySelector('.anim-dots');
+  capStart.forEach(function (_, k) { var d = document.createElement('button'); d.type = 'button'; d.className = 'anim-dot'; d.setAttribute('aria-label', 'step ' + (k + 1)); d.addEventListener('click', function () { jump(k); }); dots.appendChild(d); });
+  function showCap(k) { caps.forEach(function (c, j) { c.classList.toggle('on', j === k); }); dots.querySelectorAll('.anim-dot').forEach(function (d, j) { d.classList.toggle('on', j === k); }); }
+  var idx = 0, t0 = null, from = null, playing = true;
+  function apply(s, p) { for (var k in s.set) st[k] = s.set[k]; for (var k2 in s.to) st[k2] = from[k2] + (s.to[k2] - from[k2]) * p; if (s.set.cap != null) showCap(s.set.cap); }
+  function jump(k) {
+    var target = capStart[k]; for (var key in init) st[key] = init[key]; st.reveal = 99;
+    for (var j = 0; j < target; j++) { from = JSON.parse(JSON.stringify(st)); apply(steps[j], 1); }
+    idx = target; t0 = null; from = null; if (!playing) { apply(steps[idx], 0); draw(); }
+  }
+  function frame(t) {
+    if (!playing) return;
+    if (t0 === null) { t0 = t; from = JSON.parse(JSON.stringify(st)); }
+    var s = steps[idx], p = Math.min(1, (t - t0) / s.dur); apply(s, ease(p)); draw();
+    if (p >= 1) { idx++; t0 = null; if (idx >= steps.length) { idx = 0; for (var key in init) st[key] = init[key]; } }
+    requestAnimationFrame(frame);
+  }
+  var bp = root.querySelector('.anim-play');
+  bp.addEventListener('click', function () { playing = !playing; bp.textContent = playing ? '❚❚' : '▶'; if (playing) { t0 = null; requestAnimationFrame(frame); } });
+  root.querySelector('.anim-replay').addEventListener('click', function () { jump(0); if (!playing) { playing = true; bp.textContent = '❚❚'; requestAnimationFrame(frame); } });
+  for (var key in init) st[key] = init[key]; showCap(0); draw();
+  if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting && playing && t0 === null && idx === 0) requestAnimationFrame(frame); }); }); io.observe(root); } else requestAnimationFrame(frame);
+})();
+</script>
+{% endraw %}
