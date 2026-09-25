@@ -45,6 +45,8 @@ q    = E2M1( x * g / s_b )         # 4-bit values
 
 ## A power-of-two tensor scale
 
+{% include interactive/pow2-anim.html %}
+
 UE4M3 has three kinds of values:
 
 $$
