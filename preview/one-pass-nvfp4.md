@@ -45,23 +45,21 @@ q    = E2M1( x * g / s_b )         # 4-bit values
 
 ## A power-of-two tensor scale
 
-The normal UE4M3 values form the set
+Write a positive number as $$y = (1+f)\,2^{E}$$ with $$0 \le f < 1$$, and let R keep three mantissa bits:
 
 $$
-N = \{\, m \cdot 2^{e} \;:\; m \in \{1, \tfrac{9}{8}, \tfrac{10}{8}, \dots, \tfrac{15}{8}\},\ e = -6, \dots, 8 \,\}
+R\big((1+f)\,2^{E}\big) = \big(1 + \lfloor f \rceil_{3}\big)\,2^{E},
 $$
 
-and multiplying by $$2^k$$ only shifts its range of exponents:
+where $$\lfloor f \rceil_{3}$$ rounds f to the nearest multiple of 1/8, ties to even. On the normal range $$[2^{-6}, 448]$$, R is exactly rounding to UE4M3. Now take a block with $$v_b = \max\lvert x_b\rvert/6 = (1+f_b)\,2^{E_b}$$ and a power-of-two tensor scale $$g = 2^k$$:
 
 $$
 \begin{aligned}
-2^{k} N &= \{\, m \cdot 2^{e+k} \,\} \\
-&= \{\, m \cdot 2^{e} \;:\; m \in \{1, \tfrac{9}{8}, \dots, \tfrac{15}{8}\},\ e = -6+k, \dots, 8+k \,\}
+s_b &= R(v_b\,g) = \big(1+\lfloor f_b \rceil_3\big)\,2^{E_b+k} = g\,R(v_b), \\
+q &= \mathrm{E2M1}(x\,g/s_b) = \mathrm{E2M1}\big(x/R(v_b)\big).
 \end{aligned}
 $$
 
-so, with $$R$$ denoting rounding to UE4M3,
+Nothing on the right depends on k: the 4-bit values and the dequantized values $$\hat{x} = q\,R(v_b)$$ are fixed by the block alone, and k only enters the exponent of the stored byte. For a general $$g = (1+f_g)\,2^{E_g}$$, the mantissa of $$v_b\,g$$ is $$(1+f_b)(1+f_g)$$, whose rounding depends on $$f_g$$.
 
-$$
-R(2^k y) = 2^k R(y) \qquad \text{for } y,\ 2^k y \in [2^{-6}, 448].
-$$
+This needs $$v_b\,g \in [2^{-6}, 448]$$. Choosing $$k = \lfloor \log_2(448/v_{\max}) \rfloor$$, with $$v_{\max} = \mathrm{amax}/6$$, gives $$v_b\,g \le 448$$ for every block, so the top edge is never crossed. Below $$2^{-6}$$, UE4M3 is subnormal and rounds to a fixed step of $$2^{-9}$$ instead of three mantissa bits, so R no longer applies and $$s_b$$ depends on k. Since $$g > 224/v_{\max}$$, only blocks with $$\max\lvert x_b\rvert < \mathrm{amax}\cdot 2^{-6}/224 \approx \mathrm{amax}/14{,}000$$ can land there.
